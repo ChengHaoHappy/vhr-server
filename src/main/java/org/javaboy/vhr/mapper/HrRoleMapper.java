@@ -14,4 +14,8 @@ public interface HrRoleMapper {
     int updateByPrimaryKeySelective(HrRole record);
 
     int updateByPrimaryKey(HrRole record);
+
+    void deleteByHrid(Integer hrid);
+
+    int addRole(Integer hrid, Integer[] rids);
 }

@@ -1,5 +1,6 @@
 package org.javaboy.vhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,6 +55,7 @@ public class Hr implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {  //获取当前用户所具有的角色信息
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {

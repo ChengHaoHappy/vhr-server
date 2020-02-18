@@ -1,6 +1,7 @@
 package org.javaboy.vhr.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.javaboy.vhr.model.Hr;
 import org.javaboy.vhr.model.Role;
 
@@ -28,4 +29,7 @@ public interface HrMapper {
     Hr loadUserByUsername(String username);
 
     List<Role> getHrRolesById(Integer id);
+
+    List<Hr> getAllHrs(@Param("hrid") Integer hrid, @Param("keywords") String keywords);
+
 }
