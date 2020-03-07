@@ -19,7 +19,7 @@ public class PositionService {
     @Resource
     PositionMapper positionMapper;
 
-    public List<Position> getAllPositons() {
+    public List<Position> getAllPositions() {
         return positionMapper.selectAllPositons();
     }
 

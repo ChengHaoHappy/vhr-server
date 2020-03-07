@@ -1,17 +1,14 @@
-package org.javaboy.vhr.Controller.system.basic;
+package org.javaboy.vhr.controller.system.basic;
 
-import jdk.nashorn.internal.ir.IdentNode;
 import org.javaboy.vhr.model.Menu;
 import org.javaboy.vhr.model.RespBean;
 import org.javaboy.vhr.model.Role;
 import org.javaboy.vhr.service.MenuService;
 import org.javaboy.vhr.service.RoleService;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author ：HappyCheng

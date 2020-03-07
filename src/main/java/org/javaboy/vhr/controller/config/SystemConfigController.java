@@ -1,4 +1,4 @@
-package org.javaboy.vhr.Controller.config;
+package org.javaboy.vhr.controller.config;
 
 import org.javaboy.vhr.model.Menu;
 import org.javaboy.vhr.service.MenuService;

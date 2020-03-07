@@ -16,6 +16,14 @@ public class DepartmentService {
     @Resource
     DepartmentMapper departmentMapper;
 
+    /**
+     * 获取所有的部门
+     * @return
+     */
+    public List<Department> getAllDepartments() {
+        return departmentMapper.getAllDepartmentsByParentId(-1);
+    }
+
     public List<Department> getAllDepartmentByParentId(Integer parentId) {
         return departmentMapper.getAllDepartmentByParentId(parentId);
     }

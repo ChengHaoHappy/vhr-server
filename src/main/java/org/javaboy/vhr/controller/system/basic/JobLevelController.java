@@ -1,4 +1,4 @@
-package org.javaboy.vhr.Controller.system.basic;
+package org.javaboy.vhr.controller.system.basic;
 
 import org.javaboy.vhr.model.JobLevel;
 import org.javaboy.vhr.model.RespBean;
@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.EOFException;
 import java.util.List;
 
 /**

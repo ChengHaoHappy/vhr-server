@@ -1,4 +1,4 @@
-package org.javaboy.vhr.Controller.system.basic;
+package org.javaboy.vhr.controller.system.basic;
 
 import org.javaboy.vhr.model.Position;
 import org.javaboy.vhr.model.RespBean;
@@ -20,7 +20,7 @@ public class PositionController {
 
     @GetMapping("/")
     public List<Position> getAllPositions(){
-        return positionService.getAllPositons();
+        return positionService.getAllPositions();
     }
 
     @PostMapping("/")

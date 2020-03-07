@@ -17,6 +17,9 @@
   <sql id="Base_Column_List" >
     id, name, parentId, depPath, enabled, isParent
   </sql>
+  <select id="getAllDepartmentsByParentId" resultMap="DepartmentWithChildren">
+    select * from department where parentId=#{pid};
+  </select>
   <select id="delDepById" statementType="CALLABLE">
     call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
   </select>

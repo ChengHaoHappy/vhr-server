@@ -1,4 +1,4 @@
-package org.javaboy.vhr.Controller;
+package org.javaboy.vhr.controller;
 
 import org.javaboy.vhr.model.RespBean;
 import org.springframework.web.bind.annotation.RequestMapping;
