@@ -121,7 +121,7 @@ public class EmpBasicController {
     }
 
     /**
-     *
+     * 获取工号
      * @return
      */
     @GetMapping("/maxWorkID")

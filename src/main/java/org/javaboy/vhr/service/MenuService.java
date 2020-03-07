@@ -9,6 +9,7 @@ import org.javaboy.vhr.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.security.Security;
@@ -48,8 +49,12 @@ public class MenuService {
         return menuMapper.getMidsByRid(rid);
     }
 
+    @Transactional
     public Boolean updateMenuRole(Integer rid, Integer[] mids) {
         menuRoleMapper.deleteByRid(rid);
+        if (mids == null || mids.length == 0) {
+            return true;
+        }
         Integer result = menuRoleMapper.insertMenusByrid(rid,mids);
         return result==mids.length;
     }
