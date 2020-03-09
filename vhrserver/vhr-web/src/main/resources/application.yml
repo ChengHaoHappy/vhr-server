@@ -5,8 +5,11 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql:///vhr?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-
-#端口配置
+  rabbitmq:
+    username: guest
+    password: guest
+    host: 127.0.0.1
+    port: 5672
 server:
   port: 8081
 
@@ -14,3 +17,4 @@ server:
 logging:
   level:
     org.javaboy.vhr.mapper: debug
+

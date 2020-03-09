@@ -1,8 +1,10 @@
 package org.javaboy.vhr.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.javaboy.vhr.mapper.EmployeeMapper;
 import org.javaboy.vhr.model.Employee;
 import org.javaboy.vhr.model.RespPageBean;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,9 +17,12 @@ import java.util.List;
  * Created By ChengHao On 2020/3/7
  */
 @Service
+@Slf4j
 public class EmployeeService {
     @Resource
     EmployeeMapper employeeMapper;
+    @Resource
+    RabbitTemplate rabbitTemplate;
 
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -54,6 +59,11 @@ public class EmployeeService {
         double month = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + (Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract)));
         employee.setContractTerm(Double.parseDouble(decimalFormat.format(month / 12)));
         int result = employeeMapper.insertSelective(employee);
+        if (result==1) {
+            Employee emp = employeeMapper.getEmployeeById(employee.getId());
+            log.info(emp.toString());
+            rabbitTemplate.convertAndSend("javaboy.mail.welcome",emp);
+        }
         return result;
     }
 
