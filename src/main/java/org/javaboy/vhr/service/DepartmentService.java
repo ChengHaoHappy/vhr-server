@@ -24,9 +24,6 @@ public class DepartmentService {
         return departmentMapper.getAllDepartmentsByParentId(-1);
     }
 
-    public List<Department> getAllDepartmentByParentId(Integer parentId) {
-        return departmentMapper.getAllDepartmentByParentId(parentId);
-    }
 
     public void addDep(Department dep) {
         dep.setEnabled(true);
@@ -34,6 +31,10 @@ public class DepartmentService {
     }
 
     public void delDepById(Department dep) {
-        departmentMapper.delDepById(dep);
+        departmentMapper.deleteDepById(dep);
+    }
+
+    public List<Department> getAllDepartmentsWithOutChildren() {
+        return departmentMapper.getAllDepartmentsWithOutChildren();
     }
 }

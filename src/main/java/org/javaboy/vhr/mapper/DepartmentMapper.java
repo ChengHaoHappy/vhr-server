@@ -17,11 +17,11 @@ public interface DepartmentMapper {
 
     int updateByPrimaryKey(Department record);
 
-    List<Department> getAllDepartmentByParentId(Integer parentId);
+    List<Department> getAllDepartmentsByParentId(Integer pid);
 
     void addDep(Department dep);
 
-    void delDepById(Department dep);
+    void deleteDepById(Department dep);
 
-    List<Department> getAllDepartmentsByParentId(int i);
+    List<Department> getAllDepartmentsWithOutChildren();
 }

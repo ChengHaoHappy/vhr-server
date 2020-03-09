@@ -2,6 +2,7 @@ package org.javaboy.vhr.controller.emp;
 
 import org.javaboy.vhr.model.*;
 import org.javaboy.vhr.service.*;
+import org.javaboy.vhr.utils.POIUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,7 @@ public class EmpBasicController {
 
     /**
      * 添加员工信息
+     *
      * @param employee
      * @return
      */
@@ -60,6 +62,7 @@ public class EmpBasicController {
 
     /**
      * 删除员工信息
+     *
      * @param id
      * @return
      */
@@ -73,6 +76,7 @@ public class EmpBasicController {
 
     /**
      * 更新员工信息
+     *
      * @param employee
      * @return
      */
@@ -86,6 +90,7 @@ public class EmpBasicController {
 
     /**
      * 获取名族
+     *
      * @return
      */
     @GetMapping("/nations")
@@ -95,6 +100,7 @@ public class EmpBasicController {
 
     /**
      * 获取政治面貌
+     *
      * @return
      */
     @GetMapping("/politicsstatus")
@@ -104,6 +110,7 @@ public class EmpBasicController {
 
     /**
      * 获取职称
+     *
      * @return
      */
     @GetMapping("/joblevels")
@@ -113,6 +120,7 @@ public class EmpBasicController {
 
     /**
      * 获取职位
+     *
      * @return
      */
     @GetMapping("/positions")
@@ -122,6 +130,7 @@ public class EmpBasicController {
 
     /**
      * 获取工号
+     *
      * @return
      */
     @GetMapping("/maxWorkID")
@@ -133,11 +142,40 @@ public class EmpBasicController {
 
     /**
      * 获取所有部门
+     *
      * @return
      */
     @GetMapping("/deps")
     public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
+    }
+
+    /**
+     * 导出员工数据
+     *
+     * @return
+     */
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportData() {
+        Employee employee = new Employee();
+        List<Employee> list = (List<Employee>) employeeService.getEmployeeByPage(null, null, employee, null).getData();
+        return POIUtils.employee2Excel(list);
+    }
+
+    /**
+     * 导入员工数据
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/import")
+    public RespBean importData(MultipartFile file) throws IOException {
+        List<Employee> list = POIUtils.excel2Employee(file, nationService.getAllNations(), politicsstatusService.getAllPoliticsstatus(), departmentService.getAllDepartmentsWithOutChildren(), positionService.getAllPositions(), jobLevelService.getAllJobLevels());
+        if (employeeService.addEmps(list) == list.size()) {
+            return RespBean.ok("上传成功");
+        }
+        return RespBean.error("上传失败");
     }
 
 }

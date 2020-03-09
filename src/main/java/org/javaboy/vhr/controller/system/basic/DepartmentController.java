@@ -20,7 +20,7 @@ public class DepartmentController {
 
     @GetMapping("/")
     public List<Department> getAllDepartment(){
-        return departmentService.getAllDepartmentByParentId(-1);
+        return departmentService.getAllDepartments();
     }
 
     @PostMapping("/")

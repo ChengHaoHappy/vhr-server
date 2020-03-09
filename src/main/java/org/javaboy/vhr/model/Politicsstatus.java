@@ -1,23 +1,32 @@
 package org.javaboy.vhr.model;
 
+import lombok.Data;
+
+import java.util.Objects;
+
+@Data
 public class Politicsstatus {
     private Integer id;
 
     private String name;
 
-    public Integer getId() {
-        return id;
+    public Politicsstatus() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Politicsstatus that = (Politicsstatus) o;
+        return Objects.equals(name, that.name);
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public Politicsstatus(String name) {
+        this.name = name;
     }
 }

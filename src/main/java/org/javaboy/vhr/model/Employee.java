@@ -3,10 +3,11 @@ package org.javaboy.vhr.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Employee {
+public class Employee implements Serializable {
     private Integer id;
 
     private String name;
