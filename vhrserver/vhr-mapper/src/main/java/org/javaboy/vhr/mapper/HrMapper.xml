@@ -23,6 +23,9 @@
     <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
+    <select id="getAllHrsExceptCurrentHr" resultMap="BaseResultMap">
+        select * from hr where id !=#{id};
+    </select>
     <select id="getAllHrs" resultMap="HrWithRoles">
         select hr.id, hr.name, hr.phone, hr.telephone, hr.address, hr.enabled, hr.username, hr.userface,
         hr.remark,r.`id` as rid,r.`name` as rname,r.`nameZh` as rnameZh from hr left join hr_role hrr on
