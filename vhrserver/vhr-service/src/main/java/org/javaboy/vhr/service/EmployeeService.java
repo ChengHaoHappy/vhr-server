@@ -59,6 +59,7 @@ public class EmployeeService {
         double month = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + (Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract)));
         employee.setContractTerm(Double.parseDouble(decimalFormat.format(month / 12)));
         int result = employeeMapper.insertSelective(employee);
+        //如果添加成功则发送mq消息
         if (result==1) {
             Employee emp = employeeMapper.getEmployeeById(employee.getId());
             log.info(emp.toString());

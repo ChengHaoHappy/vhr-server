@@ -12,14 +12,17 @@
     <artifactId>mailserver</artifactId>
 
     <dependencies>
+        <!--rabbitMq依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <!--邮件服务依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <!--thymeleaf模板依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -29,7 +32,6 @@
             <artifactId>vhr-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
