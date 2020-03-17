@@ -1,6 +1,7 @@
 package org.javaboy.mailserver.receiver;
 
 import org.javaboy.vhr.model.Employee;
+import org.javaboy.vhr.model.MailConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,7 +29,7 @@ public class MailReceiver {
     @Autowired
     TemplateEngine templateEngine;
 
-    @RabbitListener(queues = "javaboy.mail.welcome") //监听
+    @RabbitListener(queues = MailConstants.MAIL_QUEUE_NAME) //监听
     public void handler(Employee employee) {
         logger.info(employee.toString());
         //收到消息，发送邮件

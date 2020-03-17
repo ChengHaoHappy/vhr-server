@@ -3,8 +3,12 @@ package org.javaboy.vhr.service;
 import lombok.extern.slf4j.Slf4j;
 import org.javaboy.vhr.mapper.EmployeeMapper;
 import org.javaboy.vhr.model.Employee;
+import org.javaboy.vhr.model.MailConstants;
+import org.javaboy.vhr.model.MailSendLog;
 import org.javaboy.vhr.model.RespPageBean;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +16,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created By ChengHao On 2020/3/7
@@ -23,6 +28,8 @@ public class EmployeeService {
     EmployeeMapper employeeMapper;
     @Resource
     RabbitTemplate rabbitTemplate;
+    @Resource
+    MailSendLogService mailSendLogService;
 
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -62,8 +69,18 @@ public class EmployeeService {
         //如果添加成功则发送mq消息
         if (result==1) {
             Employee emp = employeeMapper.getEmployeeById(employee.getId());
-            log.info(emp.toString());
-            rabbitTemplate.convertAndSend("javaboy.mail.welcome",emp);
+            //生成消息的唯一id
+            String msgId = UUID.randomUUID().toString();
+            MailSendLog mailSendLog = new MailSendLog();
+            mailSendLog.setMsgId(msgId);
+            mailSendLog.setCreateTime(new Date());
+            mailSendLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
+            mailSendLog.setRouteKey(MailConstants.MAIL_ROUTING_KEY_NAME);
+            mailSendLog.setEmpId(emp.getId());
+            //第一次重试时间设置为一分钟后
+            mailSendLog.setTryTime(new Date(System.currentTimeMillis() + 1000 * 60 * MailConstants.MSG_TIMEOUT));
+            mailSendLogService.insert(mailSendLog);
+            rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME, MailConstants.MAIL_ROUTING_KEY_NAME, emp, new CorrelationData(msgId));
         }
         return result;
     }
@@ -116,5 +133,9 @@ public class EmployeeService {
 
     public Integer updateEmployeeSalaryById(Integer eid, Integer sid) {
         return employeeMapper.updateEmployeeSalaryById(eid,sid);
+    }
+
+    public Employee getEmployeeById(Integer empId) {
+        return employeeMapper.getEmployeeById(empId);
     }
 }

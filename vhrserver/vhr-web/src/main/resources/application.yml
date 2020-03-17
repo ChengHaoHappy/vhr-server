@@ -10,6 +10,8 @@ spring:
     password: guest
     host: 127.0.0.1
     port: 5672
+    publisher-confirms: true
+    publisher-returns: true
 server:
   port: 8081
 
